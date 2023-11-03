@@ -11,6 +11,12 @@ public class Issuer {
     public Issuer() {
     }
 
+    public Issuer(String name, Double weight, BigDecimal price) {
+        this.name = name;
+        this.weight = weight;
+        this.price = price;
+    }
+
     public Issuer(String name, String ticker, Double weight, BigDecimal price) {
         this.name = name;
         this.ticker = ticker;
