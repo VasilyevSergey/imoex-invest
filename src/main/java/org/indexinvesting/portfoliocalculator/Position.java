@@ -1,14 +1,14 @@
 package org.indexinvesting.portfoliocalculator;
 
+import org.indexinvesting.securities.Security;
+
 import java.math.BigDecimal;
 
 public class Position {
-    // тикер (может быть нужно использовать ISIN качестве идентификатора?)
-    private String ticker;
-    // кол-во акций в портфеле
-    private long numberOfPositionUnits;
-    // цена за единицу
-    private BigDecimal unitPrice;
+    // ценная бумага
+    private Security security;
+    // кол-во лотов в портфеле
+    private long numberOfLots;
     // общая цена позиции
     private BigDecimal positionPrice;
 
@@ -16,19 +16,17 @@ public class Position {
         return positionPrice;
     }
 
-    public Position(String ticker, long numberOfPositionUnits, BigDecimal unitPrice) {
-        this.ticker = ticker;
-        this.numberOfPositionUnits = numberOfPositionUnits;
-        this.unitPrice = unitPrice;
-        this.positionPrice = unitPrice.multiply(BigDecimal.valueOf(numberOfPositionUnits));
+    public Position(Security security, long numberOfLots) {
+        this.security = security;
+        this.numberOfLots = numberOfLots;
+        this.positionPrice = security.getLotPrice().multiply(BigDecimal.valueOf(numberOfLots));
     }
 
     @Override
     public String toString() {
         return "Позиция { " +
-                "тикер = '" + ticker + '\'' +
-                ", количество = " + numberOfPositionUnits +
-                ", цена за единицу = " + unitPrice +
+                "ценная бумага = '" + security.toString() + '\'' +
+                ", количество лотов = " + numberOfLots +
                 ", общая цена позиции = " + positionPrice +
                 " }";
     }

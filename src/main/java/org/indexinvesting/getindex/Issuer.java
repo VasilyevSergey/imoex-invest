@@ -1,55 +1,30 @@
 package org.indexinvesting.getindex;
 
-import java.math.BigDecimal;
+import org.indexinvesting.securities.Security;
 
 public class Issuer {
-    private String name;
-    private String ticker;
+    // ценная бумага
+    private Security security;
     private Double weight;
-    private BigDecimal price;
 
     public Issuer() {
     }
 
-    public Issuer(String name, Double weight, BigDecimal price) {
-        this.name = name;
+    public Issuer(Security security, Double weight) {
+        this.security = security;
         this.weight = weight;
-        this.price = price;
     }
 
-    public Issuer(String name, String ticker, Double weight, BigDecimal price) {
-        this.name = name;
-        this.ticker = ticker;
-        this.weight = weight;
-        this.price = price;
+    public Security getSecurity() {
+        return security;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setSecurity(Security security) {
+        this.security = security;
     }
 
     public Double getWeight() {
         return weight;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public void setWeight(Double weight) {
@@ -59,10 +34,8 @@ public class Issuer {
     @Override
     public String toString() {
         return "Issuer{" +
-                "name='" + name + '\'' +
-                ", ticker='" + ticker + '\'' +
+                "security=" + security +
                 ", weight=" + weight +
-                ", price=" + price +
                 '}';
     }
 }

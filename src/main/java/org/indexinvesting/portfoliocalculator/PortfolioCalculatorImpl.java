@@ -1,7 +1,7 @@
 package org.indexinvesting.portfoliocalculator;
 
 import org.indexinvesting.getindex.ImoexCompositionGetter;
-import org.indexinvesting.getindex.ImoexCompositionGetterFromCsv;
+import org.indexinvesting.getindex.ImoexCompositionGetterFromSmartlab;
 import org.indexinvesting.getindex.Issuer;
 
 import java.math.BigDecimal;
@@ -11,11 +11,12 @@ import java.util.*;
 public class PortfolioCalculatorImpl implements PortfolioCalculator {
 
     private static final BigDecimal STEP_IN_RUR = BigDecimal.valueOf(1000L);
-    private ImoexCompositionGetter imoexCompositionGetter = new ImoexCompositionGetterFromCsv();
+
+    private final ImoexCompositionGetter imoexCompositionGetter = new ImoexCompositionGetterFromSmartlab();
 
     @Override
     public List<Position> calculate(BigDecimal portfolioTargetPrice) {
-        List<Issuer> imoexComposition = imoexCompositionGetter.getImoexComposition();
+        List<Issuer> imoexComposition = imoexCompositionGetter.get();
 
         // Считаем портфели для каждой цены в диапазоне [portfolioPrice - 50%; portfolioPrice + 50%] с заданным шагом
         Map<BigDecimal /*error*/, List<Position> /*portfolio*/> portfolioByError = new HashMap<>();
@@ -85,10 +86,11 @@ public class PortfolioCalculatorImpl implements PortfolioCalculator {
         for (Issuer issuer : imoexComposition) {
             // Вычисление суммарной цены позиции = целевая цена портфеля * вес позиции
             BigDecimal positionTargetPrice = portfolioTargetPrice.multiply(BigDecimal.valueOf(issuer.getWeight()));
-            // Вычисление количества штук позиции = суммарная цена позиции / цена за 1 единицу позиции, округление стандартное
-            long numberOfPositionUnits = positionTargetPrice.divide(issuer.getPrice(), RoundingMode.HALF_UP).longValue();
 
-            Position position = new Position(issuer.getTicker(), numberOfPositionUnits, issuer.getPrice());
+            // Вычисление количества лотов позиции = суммарная цена позиции / цена за 1 лот; округление стандартное
+            long numberOfLots = positionTargetPrice.divide(issuer.getSecurity().getLotPrice(), RoundingMode.HALF_UP).longValue();
+
+            Position position = new Position(issuer.getSecurity(), numberOfLots);
             portfolio.add(position);
         }
 
