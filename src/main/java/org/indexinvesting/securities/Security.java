@@ -29,13 +29,7 @@ public class Security {
     @Override
     public String toString() {
         return "Security{" +
-                "secId='" + secId + '\'' +
-                ", shortName='" + shortName + '\'' +
-                ", secName='" + secName + '\'' +
-                ", prevClosePrice=" + prevClosePrice +
-                ", lotSize=" + lotSize +
-                ", lotPrice=" + lotPrice +
-                '}';
+                "secId='" + secId + "}";
     }
 
     public String getSecId() {

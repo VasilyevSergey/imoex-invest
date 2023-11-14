@@ -49,13 +49,11 @@ public class SecurityGetterImpl implements SecurityGetter {
     }
 
     /**
-     * Получение данных о ценных бумагах с сайта мосбиржи
+     * Получение данных о ценных бумагах с сайта МосБиржи
      *
      * @return данные о ценных бумагах
      */
     private List<Security> getSecuritiesFromMoex() {
-        System.out.printf("get securities");
-
         Document securitiesPage;
         try {
             securitiesPage = getSecuritiesPage();

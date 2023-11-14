@@ -7,6 +7,15 @@ import java.math.BigDecimal;
 public class Position {
     // ценная бумага
     private Security security;
+
+    public Security getSecurity() {
+        return security;
+    }
+
+    public long getNumberOfLots() {
+        return numberOfLots;
+    }
+
     // кол-во лотов в портфеле
     private long numberOfLots;
     // общая цена позиции
