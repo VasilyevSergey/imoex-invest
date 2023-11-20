@@ -26,7 +26,7 @@ public class OrdersCreatorImpl implements OrdersCreator {
 
         // оставляем только заявки с ненулевым количеством лотов
         return orders.stream()
-                .filter(order -> order.getLotSize() == 0)
+                .filter(order -> order.getLotSize() != 0)
                 .collect(Collectors.toList());
     }
 

@@ -1,7 +1,7 @@
-package org.indexinvesting.getindex;
+package org.indexinvesting.index;
 
+import org.indexinvesting.correctionfactor.CorrectionFactorGetterFromCsv;
 import org.indexinvesting.securities.Security;
-import org.indexinvesting.securities.SecurityGetter;
 import org.indexinvesting.securities.SecurityGetterImpl;
 
 import java.io.File;
@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ImoexCompositionGetterFromCsv implements ImoexCompositionGetter {
+public class ImoexCompositionGetterFromCsv extends AbstractImoexCompositionGetter {
 
     private static final String FILENAME = "src/main/resources/indexComposition.csv";
     private static final String COMMA_DELIMITER = ";";
 
-    private final SecurityGetter securityGetter = new SecurityGetterImpl();
+    public ImoexCompositionGetterFromCsv() {
+        super(new SecurityGetterImpl(), new CorrectionFactorGetterFromCsv());
+    }
 
     @Override
     public List<Issuer> get() {
@@ -44,7 +46,7 @@ public class ImoexCompositionGetterFromCsv implements ImoexCompositionGetter {
             String value = valuesInLine.get(i);
             switch (i) {
                 case 0:
-                    Security security = securityGetter.getSecurityById(value);
+                    Security security = getSecurityGetter().getSecurityById(value);
                     issuer.setSecurity(security);
                     break;
                 case 1:

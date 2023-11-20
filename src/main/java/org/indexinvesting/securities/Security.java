@@ -16,7 +16,6 @@ public class Security {
     // Стоимость лота
     private BigDecimal lotPrice;
 
-
     public Security(String secId, String shortName, Double prevClosePrice, int lotSize, String secName) {
         this.secId = secId;
         this.shortName = shortName;

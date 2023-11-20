@@ -1,7 +1,10 @@
-package org.indexinvesting.getindex;
+package org.indexinvesting.index;
 
 import org.indexinvesting.securities.Security;
 
+/**
+ * Ценная бумага и её вес в индексе МосБиржи
+ */
 public class Issuer {
     // ценная бумага
     private Security security;

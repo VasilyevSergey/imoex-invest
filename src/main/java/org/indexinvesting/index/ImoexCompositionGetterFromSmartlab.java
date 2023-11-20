@@ -1,7 +1,7 @@
-package org.indexinvesting.getindex;
+package org.indexinvesting.index;
 
+import org.indexinvesting.correctionfactor.CorrectionFactorGetterFromCsv;
 import org.indexinvesting.securities.Security;
-import org.indexinvesting.securities.SecurityGetter;
 import org.indexinvesting.securities.SecurityGetterImpl;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,16 +9,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.SEVERE;
 
-public class ImoexCompositionGetterFromSmartlab implements ImoexCompositionGetter {
+public class ImoexCompositionGetterFromSmartlab extends AbstractImoexCompositionGetter {
     private static final String SMARTLAB_PAGE_URL_WITH_IMOEX_COMPOSITION = "https://smart-lab.ru/q/index_stocks/IMOEX/";
 
     private final Logger logger = Logger.getLogger(getClass().getName());
-    private final SecurityGetter securityGetter = new SecurityGetterImpl();
+
+    public ImoexCompositionGetterFromSmartlab() {
+        super(new SecurityGetterImpl(), new CorrectionFactorGetterFromCsv());
+    }
 
     @Override
     public List<Issuer> get() {
@@ -31,7 +35,7 @@ public class ImoexCompositionGetterFromSmartlab implements ImoexCompositionGette
             throw new RuntimeException(e);
         }
 
-        Element table =  smartlab.select("table").first();
+        Element table = smartlab.select("table").first();
         if (table == null) {
             throw new RuntimeException("Не удалось загрузить таблицу с составом индекса МосБиржи с сайта smart-lab.ru");
         }
@@ -43,7 +47,7 @@ public class ImoexCompositionGetterFromSmartlab implements ImoexCompositionGette
 
             String shortName = columns.get(1).text();
             Double weight = getWeight(row);
-            Security security = securityGetter.getSecurityByShortName(shortName);
+            Security security = getSecurityGetter().getSecurityByShortName(shortName);
 
             issuers.add(new Issuer(security, weight));
         }

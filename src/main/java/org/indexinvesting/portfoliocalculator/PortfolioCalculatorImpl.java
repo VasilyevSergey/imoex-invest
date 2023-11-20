@@ -1,8 +1,8 @@
 package org.indexinvesting.portfoliocalculator;
 
-import org.indexinvesting.getindex.ImoexCompositionGetter;
-import org.indexinvesting.getindex.ImoexCompositionGetterFromSmartlab;
-import org.indexinvesting.getindex.Issuer;
+import org.indexinvesting.index.ImoexCompositionGetter;
+import org.indexinvesting.index.ImoexCompositionGetterFromSmartlab;
+import org.indexinvesting.index.Issuer;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -16,7 +16,7 @@ public class PortfolioCalculatorImpl implements PortfolioCalculator {
 
     @Override
     public List<Position> calculate(BigDecimal portfolioTargetPrice) {
-        List<Issuer> imoexComposition = imoexCompositionGetter.get();
+        List<Issuer> imoexComposition = imoexCompositionGetter.getWithCorrectedWeights();
 
         // Считаем портфели для каждой цены в диапазоне [portfolioPrice - 50%; portfolioPrice + 50%] с заданным шагом
         Map<BigDecimal /*error*/, List<Position> /*portfolio*/> portfolioByError = new HashMap<>();

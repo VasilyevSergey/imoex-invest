@@ -1,5 +1,8 @@
 package org.indexinvesting;
 
+import org.indexinvesting.correctionfactor.CorrectionFactor;
+import org.indexinvesting.correctionfactor.CorrectionFactorGetter;
+import org.indexinvesting.correctionfactor.CorrectionFactorGetterFromCsv;
 import org.indexinvesting.orders.Order;
 import org.indexinvesting.orders.OrdersCreator;
 import org.indexinvesting.orders.OrdersCreatorImpl;
@@ -21,6 +24,7 @@ public class Main {
 
         // Сортируем по убыванию общей цены позиции и выводим
         portfolio.stream()
+                .filter(position -> position.getNumberOfLots() != 0)
                 .sorted(Comparator.comparing(Position::getPositionPrice))
                 .toList()
                 .reversed()
