@@ -46,7 +46,10 @@ public class PortfolioCalculatorImpl implements PortfolioCalculator {
         }
 
         if (portfolioByError.size() == 1) {
-            return portfolioByError.get(0);
+            return portfolioByError.values()
+                    .stream()
+                    .findFirst()
+                    .orElse(Collections.emptyList());
         }
 
         // находим портфель с минимальным отклонением

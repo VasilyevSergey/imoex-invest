@@ -1,8 +1,5 @@
 package org.indexinvesting;
 
-import org.indexinvesting.correctionfactor.CorrectionFactor;
-import org.indexinvesting.correctionfactor.CorrectionFactorGetter;
-import org.indexinvesting.correctionfactor.CorrectionFactorGetterFromCsv;
 import org.indexinvesting.orders.Order;
 import org.indexinvesting.orders.OrdersCreator;
 import org.indexinvesting.orders.OrdersCreatorImpl;
